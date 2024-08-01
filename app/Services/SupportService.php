@@ -3,23 +3,22 @@
 namespace App\Services;
 
 use App\DTO\CreateSupportDTO;
+use App\Repositories\SupportRepositoryInterface;
 use stdClass;
 
 class SupportService
 {
-    protected $repository;
-
-    public function __construct()
-    {
-
-    }
+    public function __construct(
+        protected SupportRepositoryInterface $repository
+    )
+    {}
 
     public function getAll(string $filter = null): array
     {
         return $this->repository->getAll($filter);
     }
 
-    public function finOne(string|int $id): stdClass|null
+    public function findOne(string|int $id): stdClass|null
     {
         return $this->repository->findOne($id);
     }

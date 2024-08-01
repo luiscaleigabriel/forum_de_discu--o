@@ -13,19 +13,20 @@ use Illuminate\Http\Request;
 class SupportController extends Controller
 {
     public function __construct(
-        protected SupportService $services;
+        protected SupportService $services
     )
     {}
 
     public function index(StoreUpdateSupport $request)
     {
         $supports = $this->services->getAll($request->filter);
+        dd($supports);
         return view('admin.support.index', compact('supports'));
     }
 
     public function show(string|int $id)
     {
-        $support = $this->services->finOne($id);
+        $support = $this->services->findOne($id);
 
         if(!$support) {
             return redirect()->back();
