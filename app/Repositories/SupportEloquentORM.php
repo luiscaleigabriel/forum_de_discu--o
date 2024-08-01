@@ -7,6 +7,7 @@ use App\DTO\{
     UpdateSupportDTO
 };
 use App\Models\Support;
+use stdClass;
 
 class SupportEloquentORM implements SupportRepositoryInterface
 {
@@ -24,7 +25,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
                             $query->orwhere('body', 'like', "%$filter%");
                         }
                     })
-                    ->all()
+                    ->get()
                     ->toArray();
     }
 

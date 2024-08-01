@@ -17,11 +17,13 @@ class SupportController extends Controller
     )
     {}
 
-    public function index(StoreUpdateSupport $request)
+    public function index()
     {
-        $supports = $this->services->getAll($request->filter);
+        $supports = $this->services->getAll();
+
         dd($supports);
-        return view('admin.support.index', compact('supports'));
+
+        // return view('admin.support.index', compact('supports'));
     }
 
     public function show(string|int $id)
