@@ -7,6 +7,7 @@ use App\DTO\{
     UpdateSupportDTO
 };
 use App\Models\Support;
+use App\Repositories\Presenter\PaginationPresenter;
 use stdClass;
 
 class SupportEloquentORM implements SupportRepositoryInterface
@@ -16,7 +17,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
     )
     {}
 
-    public function paginate (int $page = 1, int $totalPages = 15 , string $filter = null): PaginationInterface
+    public function paginate (int $page = 1, int $totalPerPages = 15 , string $filter = null): PaginationInterface
     {
         $result = $this->model
                     ->where(function ($query) use ($filter) {
@@ -25,8 +26,9 @@ class SupportEloquentORM implements SupportRepositoryInterface
                             $query->orwhere('body', 'like', "%$filter%");
                         }
                     })
-                    ->paginate($totalPages)
-                    ->toArray();
+                    ->paginate($totalPerPages, ['*'], 'page', $page);
+
+        return (new PaginationPresenter($result));
     }
 
     public function getAll(string $filter = null): array
